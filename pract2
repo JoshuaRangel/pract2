@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int fibonacci(int a){
+
+    if(a<=1){
+        return a;
+    }
+    else {
+        return fibonacci(a-1) + fibonacci(a-2);
+    }
+}
+
+int main(){
+    int x;
+    printf("lista\n n fibonacci");
+    for(x=0;x<50;x++){
+        clock_t start = clock();
+        printf("\nResultado%d=%d",x,fibonacci(x));
+        clock_t end = clock();
+        double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
+        printf("Tiempo de ejecución: %f segundos\n", time_taken);
+    }
+
+    return 0;
+
+}
