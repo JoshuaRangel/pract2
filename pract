@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <time.h>
+
+#define MAX_SIZE 100
+
+void merge_arrays(int A[], int sA, int B[], int sB, int C[]) {
+    for (int i = 0; i < sA; i++) {
+        C[i] = A[i];
+    }
+    for (int i = 0; i < sB; i++) {
+        C[i + sA] = B[i];
+    }
+}
+
+void bubble_sort(int C[], int sC) {
+    for (int i = 0; i < sC - 1; i++) {
+        for (int j = 0; j < sC - 1 - i; j++) {
+            if (C[j] > C[j + 1]) {
+                int temp = C[j + 1];
+                C[j + 1] = C[j];
+                C[j] = temp;
+            }
+        }
+    }
+}
+
+double calculate_median(int C[], int sC) {
+    if (sC % 2 == 0) {
+        return (C[sC / 2 - 1] + C[sC / 2]) / 2.0;
+    } else {
+        return C[sC / 2];
+    }
+}
+
+void print_array(int C[], int sC) {
+    for (int i = 0; i < sC; i++) {
+        printf("%d\n", C[i]);
+    }
+}
+
+int main() {
+    int A[] = {1, 5, 8, 6, 9};
+    int B[] = {5, 8, 6, 5, 9, 6, 3, 8, 2, 1};
+    int sA = sizeof(A) / sizeof(A[0]);
+    int sB = sizeof(B) / sizeof(B[0]);
+    int C[MAX_SIZE];
+    int sC = sA + sB;
+    clock_t inicio, fin;
+
+    inicio = clock();
+
+    merge_arrays(A, sA, B, sB, C);
+    bubble_sort(C, sC);
+
+    printf("Sorted array:\n");
+    print_array(C, sC);
+
+    double median = calculate_median(C, sC);
+    printf("\nMedian: %f\n", median);
+
+    fin = clock();
+    double tiempo_total = (double)(fin - inicio) / CLOCKS_PER_SEC;
+    printf("\nExecution time: %f seconds\n", tiempo_total);
+
+    return 0;
+}
