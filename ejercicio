@@ -1,0 +1,56 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Estructura para almacenar artículos
+struct Item {
+    int profit, weight;
+    Item(int profit, int weight) {
+        this->profit = profit;
+        this->weight = weight;
+    }
+};
+
+// Función de comparación para ordenar por relación valor/peso
+static bool cmp(struct Item a, struct Item b) {
+    double r1 = (double)a.profit / (double)a.weight;
+    double r2 = (double)b.profit / (double)b.weight;
+    return r1 > r2;
+}
+
+// Función para resolver el problema de la mochila fraccionaria
+double fractionalKnapsack(int W, struct Item arr[], int N) {
+    sort(arr, arr + N, cmp);  // Ordenar por relación valor/peso
+    double finalvalue = 0.0;
+
+    for (int i = 0; i < N; i++) {
+        if (arr[i].weight <= W) {
+            W -= arr[i].weight;
+            finalvalue += arr[i].profit;
+        } else {
+            finalvalue += arr[i].profit * ((double)W / (double)arr[i].weight);
+            break;
+        }
+    }
+    return finalvalue;
+}
+
+int main() {
+    // Lista de artículos (profit, weight)
+    Item arr[] = {
+        {100, 10}, {280, 40}, {120, 20}, {200, 50}, {180, 30},
+        {150, 15}, {50, 10},  {90, 15},  {300, 45}, {60, 5},
+        {250, 25}, {75, 10},  {130, 20}, {220, 35}, {160, 25},
+        {110, 20}, {70, 10},  {140, 30}, {95, 15},  {85, 5}
+    };
+    int N = sizeof(arr) / sizeof(arr[0]);
+
+    // Prueba para W = 50
+    int W1 = 50;
+    cout << "Maximum profit for W = 50: " << fractionalKnapsack(W1, arr, N) << endl;
+
+    // Prueba para W = 80
+    int W2 = 80;
+    cout << "Maximum profit for W = 80: " << fractionalKnapsack(W2, arr, N) << endl;
+
+    return 0;
+}
