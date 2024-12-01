@@ -1,0 +1,46 @@
+#include <stdio.h>
+
+// Función para contar los subarreglos con promedio >= threshold
+int numOfSubarrays(int arr[], int arrSize, int k, int threshold) {
+    int count = 0;
+    int sum = 0;
+    int target = k * threshold;  // Umbral basado en suma
+    int i;  // Declaración fuera de los bucles
+
+    // Calcular la suma inicial de los primeros 'k' elementos
+    for (i = 0; i < k; i++) {
+        sum += arr[i];
+    }
+
+    // Si la suma cumple el umbral, incrementar el contador
+    if (sum >= target) {
+        count++;
+    }
+
+    // Deslizar la ventana sobre el arreglo
+    for (i = k; i < arrSize; i++) {
+        sum = sum - arr[i - k] + arr[i];  // Ajustar la suma
+        if (sum >= target) {
+            count++;
+        }
+    }
+
+    return count;
+}
+
+// Función principal
+int main() {
+    // Ejemplo 1
+    int arr1[] = {2, 2, 2, 2, 5, 5, 5, 8};
+    int k1 = 3, threshold1 = 4;
+    int size1 = sizeof(arr1) / sizeof(arr1[0]);
+    printf("Output for Example 1: %d\n", numOfSubarrays(arr1, size1, k1, threshold1));
+
+    // Ejemplo 2
+    int arr2[] = {11, 13, 17, 23, 29, 31, 7, 5, 2, 3};
+    int k2 = 3, threshold2 = 5;
+    int size2 = sizeof(arr2) / sizeof(arr2[0]);
+    printf("Output for Example 2: %d\n", numOfSubarrays(arr2, size2, k2, threshold2));
+
+    return 0;
+}
